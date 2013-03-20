@@ -2,7 +2,11 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "VideoController.h"
+#include "CameraFile.h"
+using namespace std;
 
+using namespace cocos2d;
 class HelloWorld : public cocos2d::CCLayer
 {
 public:
@@ -17,6 +21,13 @@ public:
 
     // preprocessor macro for "static create()" constructor ( node() deprecated )
     CREATE_FUNC(HelloWorld);
+    ~HelloWorld();
+private:
+    VideoController *video;
+    void onStart(CCObject *);
+    void onStop(CCObject *);
+    CameraFile *camera;
+    string savedFile;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

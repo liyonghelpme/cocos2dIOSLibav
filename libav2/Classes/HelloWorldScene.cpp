@@ -71,9 +71,37 @@ bool HelloWorld::init()
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
     
+    CCMenuItemFont *item1 = CCMenuItemFont::create("start", this, menu_selector(HelloWorld::onStart));
+    CCMenuItemFont *item2 = CCMenuItemFont::create("stop", this, menu_selector(HelloWorld::onStop));
+    CCMenu *menu = CCMenu::create(item1, item2, NULL);
+    addChild(menu);
+    camera = new CameraFile();
+    
+    video = VideoController::create();
+    addChild(video);
+    video->setCamera(camera);
+    
+    item1->setScale(2);
+    item2->setScale(2);
+    item1->setPosition(ccp(0, 200));
+    item2->setPosition(ccp(0, -200));
     return true;
+    
+    
 }
-
+void HelloWorld::onStart(CCObject *send){
+    const char *fileName = camera->getFileName();
+    CCLOG("fileName %s", fileName);
+    savedFile = string(fileName);
+    video->startWork(960, 640, 960, 640, fileName, 1./30);
+    
+}
+HelloWorld::~HelloWorld() {
+    delete camera;
+}
+void HelloWorld::onStop(CCObject *send) {
+    video->stopWork();
+}
 void HelloWorld::menuCloseCallback(CCObject* pSender)
 {
     CCDirector::sharedDirector()->end();
