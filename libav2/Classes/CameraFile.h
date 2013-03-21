@@ -30,6 +30,8 @@ private:
     //NSString *fn;
     int ct;
     void createDataFBO();
+    void destroyDataFBO();
+    
     GLuint movieFrameBuffer;
     CVOpenGLESTextureCacheRef coreVideoTextureCache;
     EAGLContext *context;

@@ -16,7 +16,7 @@ using namespace cocos2d;
 CameraFile::CameraFile() {
     NSDate *curTime = [NSDate date];
     ct = int([curTime timeIntervalSince1970]);
-    
+    movieFrameBuffer = 0;
 }
 const char *CameraFile::getFileName() {
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -36,6 +36,22 @@ const char *CameraFile::getFileName() {
     
    
     return [appFile UTF8String];
+}
+void CameraFile::destroyDataFBO() {
+    if (movieFrameBuffer) {
+        glDeleteFramebuffers(1, &movieFrameBuffer);
+        movieFrameBuffer = 0;
+    }
+    if (coreVideoTextureCache) {
+        CFRelease(coreVideoTextureCache);
+    }
+    if (renderTexture) {
+        CFRelease(renderTexture);
+    }
+    if (renderTarget) {
+        CVPixelBufferRelease(renderTarget);
+    }
+    
 }
 //生成TextureCache 管理器
 //pixelBuffer renderTarget  内存中  依赖 writePixelBuffer 管理器
@@ -71,7 +87,7 @@ void CameraFile::createDataFBO() {
     
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, CVOpenGLESTextureGetName(renderTexture), 0);
 
-    glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
+    //glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
 }
 void CameraFile::savedToCamera() {
     const char *fileName = this->getFileName();
@@ -132,25 +148,35 @@ void CameraFile::startWork(int width, int height) {
     this->createDataFBO();
 }
 void CameraFile::compressFrame() {
-    NSLog(@"compressFrame in Camera");
-    CVPixelBufferRef pixel_buffer = NULL;
-    CVReturn status = CVPixelBufferPoolCreatePixelBuffer(NULL, [assetWriterPixelBufferInput pixelBufferPool], &pixel_buffer);
-    if((pixel_buffer == NULL) || (status != kCVReturnSuccess)) {
+    if (!assetWriterVideoInput.readyForMoreMediaData)
+    {
+        NSLog(@"Had to drop a video frame");
         return;
-    } else {
+    }
+    //结束绘制 导出数据
+    //glFinish();
+    NSLog(@"compressFrame in Camera");
+    NSLog(@"lock pixel_buffer %@", renderTarget);
+    CVPixelBufferRef pixel_buffer = NULL;
+    //CVReturn status = CVPixelBufferPoolCreatePixelBuffer(NULL, [assetWriterPixelBufferInput pixelBufferPool], &pixel_buffer);
+    pixel_buffer = renderTarget;
+    
+    //if((pixel_buffer == NULL) || (status != kCVReturnSuccess)) {
+    //    return;
+    //} else {
         //直接读取Framebuffer 中的数据 
         CVPixelBufferLockBaseAddress(pixel_buffer, 0);
         
-        GLint oldFBO;
-        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
-        glBindFramebuffer(GL_FRAMEBUFFER, movieFrameBuffer);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        //GLint oldFBO;
+        //glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
+        //glBindFramebuffer(GL_FRAMEBUFFER, movieFrameBuffer);
+        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         //绘制场景
-        CCDirector::sharedDirector()->getRunningScene()->visit();
+        //CCDirector::sharedDirector()->getRunningScene()->visit();
         
         //GLubyte *pixelBufferData = (GLubyte *)CVPixelBufferGetBaseAddress(pixel_buffer);
-        glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
+        //glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
         
         //测试 压缩还是 read 是 瓶颈
         //memset(pixelBufferData, 255, width*height/2*4);
@@ -167,7 +193,8 @@ void CameraFile::compressFrame() {
             memcpy(&pixelBufferData[(i*width)*4], &pixelBufferData[(j*width)*4], 4*width);
             memcpy(&pixelBufferData[(j*width)*4], frameData, 4*width);
         }
-         */
+        */
+         
          
         /*
         int i, j;
@@ -181,7 +208,7 @@ void CameraFile::compressFrame() {
         }
         */
         
-    }
+   // }
     CMTime currentTime = CMTimeMakeWithSeconds([[NSDate date] timeIntervalSinceDate:startTime], 120);
     if (![assetWriterPixelBufferInput appendPixelBuffer:pixel_buffer withPresentationTime:currentTime]) {
         NSLog(@"Problem appending pixel buffer at time: %lld", currentTime.value);
@@ -189,7 +216,8 @@ void CameraFile::compressFrame() {
         
     }
     CVPixelBufferUnlockBaseAddress(pixel_buffer, 0);
-    CVPixelBufferRelease(pixel_buffer);
+    //不能释放 pixel_buffer
+    //CVPixelBufferRelease(pixel_buffer);
     
 }
 void CameraFile::stopWork() {
@@ -202,6 +230,6 @@ void CameraFile::stopWork() {
     [assetWriterPixelBufferInput release];
     [startTime release];
     free(frameData);
-     
+    destroyDataFBO();
 }
 
