@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		787E566216F98CA100E8797B /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 787E566116F98CA100E8797B /* libbz2.dylib */; };
+		78CFE07816FAA188002BEA53 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78CFE07716FAA188002BEA53 /* CoreMedia.framework */; };
+		78CFE07A16FAA1B8002BEA53 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78CFE07916FAA1B8002BEA53 /* CoreVideo.framework */; };
 		78DC773116F987CD004D4E0B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DC773016F987CD004D4E0B /* QuartzCore.framework */; };
 		78DC773316F987CD004D4E0B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DC773216F987CD004D4E0B /* OpenGLES.framework */; };
 		78DC773516F987CD004D4E0B /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DC773416F987CD004D4E0B /* OpenAL.framework */; };
@@ -209,18 +211,20 @@
 		78DC79E116F987D3004D4E0B /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC79E016F987D3004D4E0B /* CCPhysicsSprite.cpp */; };
 		78DC79E516F987D3004D4E0B /* cocos2dx-ext.mkf in Resources */ = {isa = PBXBuildFile; fileRef = 78DC79E416F987D3004D4E0B /* cocos2dx-ext.mkf */; };
 		78DC79E716F987D3004D4E0B /* cocos2dx-ext_public.defines.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78DC79E616F987D3004D4E0B /* cocos2dx-ext_public.defines.txt */; };
-		78DC79ED16F987D3004D4E0B /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC79EC16F987D3004D4E0B /* AppDelegate.cpp */; };
+		78DC79ED16F987D3004D4E0B /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78DC79EC16F987D3004D4E0B /* AppDelegate.mm */; };
 		78DC79F716F988A5004D4E0B /* libffmpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DC79F616F988A5004D4E0B /* libffmpeg.a */; };
 		78DC79FE16F988F7004D4E0B /* CameraFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78DC79F916F988F7004D4E0B /* CameraFile.mm */; };
-		78DC79FF16F988F7004D4E0B /* VideoController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC79FA16F988F7004D4E0B /* VideoController.cpp */; };
+		78DC79FF16F988F7004D4E0B /* VideoController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78DC79FA16F988F7004D4E0B /* VideoController.mm */; };
 		78DC7A0016F988F7004D4E0B /* yuv420.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DC79FC16F988F7004D4E0B /* yuv420.c */; };
-		78DC7A1316F9892D004D4E0B /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78DC7A1116F9892D004D4E0B /* HelloWorldScene.cpp */; };
+		78DC7A1316F9892D004D4E0B /* HelloWorldScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78DC7A1116F9892D004D4E0B /* HelloWorldScene.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		787E565C16F98BE700E8797B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		787E565F16F98C5800E8797B /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
 		787E566116F98CA100E8797B /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = usr/lib/libbz2.dylib; sourceTree = SDKROOT; };
+		78CFE07716FAA188002BEA53 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		78CFE07916FAA1B8002BEA53 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		78DC772C16F987CD004D4E0B /* libav2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = libav2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78DC773016F987CD004D4E0B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		78DC773216F987CD004D4E0B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -665,15 +669,15 @@
 		78DC79E616F987D3004D4E0B /* cocos2dx-ext_public.defines.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = "cocos2dx-ext_public.defines.txt"; path = "libs/extensions/proj.marmalade/cocos2dx-ext_public.defines.txt"; sourceTree = "<group>"; };
 		78DC79E916F987D3004D4E0B /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		78DC79EB16F987D3004D4E0B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
-		78DC79EC16F987D3004D4E0B /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = Classes/AppDelegate.cpp; sourceTree = "<group>"; };
+		78DC79EC16F987D3004D4E0B /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Classes/AppDelegate.mm; sourceTree = "<group>"; };
 		78DC79F616F988A5004D4E0B /* libffmpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffmpeg.a; path = libav2/libs/libffmpeg.a; sourceTree = "<group>"; };
 		78DC79F816F988F7004D4E0B /* CameraFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraFile.h; path = Classes/CameraFile.h; sourceTree = "<group>"; };
 		78DC79F916F988F7004D4E0B /* CameraFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CameraFile.mm; path = Classes/CameraFile.mm; sourceTree = "<group>"; };
-		78DC79FA16F988F7004D4E0B /* VideoController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoController.cpp; path = Classes/VideoController.cpp; sourceTree = "<group>"; };
+		78DC79FA16F988F7004D4E0B /* VideoController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VideoController.mm; path = Classes/VideoController.mm; sourceTree = "<group>"; };
 		78DC79FB16F988F7004D4E0B /* VideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoController.h; path = Classes/VideoController.h; sourceTree = "<group>"; };
 		78DC79FC16F988F7004D4E0B /* yuv420.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = yuv420.c; path = Classes/yuv420.c; sourceTree = "<group>"; };
 		78DC79FD16F988F7004D4E0B /* yuv420.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = yuv420.h; path = Classes/yuv420.h; sourceTree = "<group>"; };
-		78DC7A1116F9892D004D4E0B /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
+		78DC7A1116F9892D004D4E0B /* HelloWorldScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HelloWorldScene.mm; path = Classes/HelloWorldScene.mm; sourceTree = "<group>"; };
 		78DC7A1216F9892D004D4E0B /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = Classes/HelloWorldScene.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -682,13 +686,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78CFE07A16FAA1B8002BEA53 /* CoreVideo.framework in Frameworks */,
+				78CFE07816FAA188002BEA53 /* CoreMedia.framework in Frameworks */,
+				78DC773916F987CD004D4E0B /* AVFoundation.framework in Frameworks */,
 				787E566216F98CA100E8797B /* libbz2.dylib in Frameworks */,
 				78DC79F716F988A5004D4E0B /* libffmpeg.a in Frameworks */,
 				78DC773116F987CD004D4E0B /* QuartzCore.framework in Frameworks */,
 				78DC773316F987CD004D4E0B /* OpenGLES.framework in Frameworks */,
 				78DC773516F987CD004D4E0B /* OpenAL.framework in Frameworks */,
 				78DC773716F987CD004D4E0B /* AudioToolbox.framework in Frameworks */,
-				78DC773916F987CD004D4E0B /* AVFoundation.framework in Frameworks */,
 				78DC773B16F987CD004D4E0B /* UIKit.framework in Frameworks */,
 				78DC773D16F987CD004D4E0B /* Foundation.framework in Frameworks */,
 				78DC773F16F987CD004D4E0B /* CoreGraphics.framework in Frameworks */,
@@ -702,6 +708,8 @@
 		78DC772116F987CD004D4E0B = {
 			isa = PBXGroup;
 			children = (
+				78CFE07916FAA1B8002BEA53 /* CoreVideo.framework */,
+				78CFE07716FAA188002BEA53 /* CoreMedia.framework */,
 				787E566116F98CA100E8797B /* libbz2.dylib */,
 				787E565F16F98C5800E8797B /* libz.1.1.3.dylib */,
 				787E565C16F98BE700E8797B /* libz.dylib */,
@@ -1612,16 +1620,16 @@
 		78DC79EA16F987D3004D4E0B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				78DC7A1116F9892D004D4E0B /* HelloWorldScene.cpp */,
+				78DC7A1116F9892D004D4E0B /* HelloWorldScene.mm */,
 				78DC7A1216F9892D004D4E0B /* HelloWorldScene.h */,
 				78DC79F816F988F7004D4E0B /* CameraFile.h */,
 				78DC79F916F988F7004D4E0B /* CameraFile.mm */,
-				78DC79FA16F988F7004D4E0B /* VideoController.cpp */,
+				78DC79FA16F988F7004D4E0B /* VideoController.mm */,
 				78DC79FB16F988F7004D4E0B /* VideoController.h */,
 				78DC79FC16F988F7004D4E0B /* yuv420.c */,
 				78DC79FD16F988F7004D4E0B /* yuv420.h */,
 				78DC79EB16F987D3004D4E0B /* AppDelegate.h */,
-				78DC79EC16F987D3004D4E0B /* AppDelegate.cpp */,
+				78DC79EC16F987D3004D4E0B /* AppDelegate.mm */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1878,11 +1886,11 @@
 				78DC79D816F987D3004D4E0B /* HttpClient.cpp in Sources */,
 				78DC79DE16F987D3004D4E0B /* CCPhysicsDebugNode.cpp in Sources */,
 				78DC79E116F987D3004D4E0B /* CCPhysicsSprite.cpp in Sources */,
-				78DC79ED16F987D3004D4E0B /* AppDelegate.cpp in Sources */,
+				78DC79ED16F987D3004D4E0B /* AppDelegate.mm in Sources */,
 				78DC79FE16F988F7004D4E0B /* CameraFile.mm in Sources */,
-				78DC79FF16F988F7004D4E0B /* VideoController.cpp in Sources */,
+				78DC79FF16F988F7004D4E0B /* VideoController.mm in Sources */,
 				78DC7A0016F988F7004D4E0B /* yuv420.c in Sources */,
-				78DC7A1316F9892D004D4E0B /* HelloWorldScene.cpp in Sources */,
+				78DC7A1316F9892D004D4E0B /* HelloWorldScene.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

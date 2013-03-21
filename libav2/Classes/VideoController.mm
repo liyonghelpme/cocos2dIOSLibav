@@ -35,7 +35,7 @@ bool VideoController::init()
     CCLog("pixel fmt %d", fmt1);
     return true;
 }
-
+/*
 void VideoController::startWork(int winW, int winH, int w, int h, const char *fileName, float fr)
 {
     fileN = string(fileName);
@@ -88,6 +88,16 @@ void VideoController::startWork(int winW, int winH, int w, int h, const char *fi
 
     av_write_header(oc);
 }
+*/
+void VideoController::startWork(int winW, int winH, int w, int h, const char *fn, float fr) {
+    startYet = true;
+    camera->startWork(winW, winH);
+}
+void VideoController::stopWork() {
+    startYet = false;
+    camera->stopWork();
+}
+/*
 void VideoController::stopWork()
 {
     av_write_trailer(oc);
@@ -118,9 +128,15 @@ void VideoController::stopWork()
     camera->savedToCamera(fileN.c_str());
 
 }
+ */
 void VideoController::setCamera(CameraFile *c) {
     camera = c;
 }
+void VideoController::compressCurrentFrame() {
+    CCLog("compressFrame in VideoController");
+    camera->compressFrame();
+}
+/*
 void VideoController::compressCurrentFrame()
 {
     AVCodecContext *c = video_st->codec;
@@ -179,6 +195,7 @@ void VideoController::compressCurrentFrame()
 
     //fwrite(outbuf, 1, out_size, f);
 }
+ */
 /*
 pts 帧率的问题
 http://stackoverflow.com/questions/6603979/ffmpegavcodec-encode-video-setting-pts-h264

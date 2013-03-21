@@ -7,14 +7,25 @@
 //
 
 #include "CameraFile.h"
+#include "cocos2d.h"
+#include "AppController.h"
+#include "RootViewController.h"
+#include "EAGLView.h"
+using namespace cocos2d;
+//视频的保存时间作为名字放置重叠
 CameraFile::CameraFile() {
+    NSDate *curTime = [NSDate date];
+    ct = int([curTime timeIntervalSince1970]);
     
 }
 const char *CameraFile::getFileName() {
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     //NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *document = [path objectAtIndex:0];
-    NSString *appFile = [document stringByAppendingPathComponent:@"my.mp4"];
+    
+    NSString *s = [NSString stringWithFormat:@"%d-test.mov", ct];
+    NSString *appFile = [document stringByAppendingPathComponent: s ];
+    
     NSLog(@"appfile is %@", appFile);
     
     NSArray *testPath = NSSearchPathForDirectoriesInDomains(NSPicturesDirectory, NSUserDomainMask, YES);
@@ -26,8 +37,171 @@ const char *CameraFile::getFileName() {
    
     return [appFile UTF8String];
 }
-void CameraFile::savedToCamera(const char *fileName) {
-    UISaveVideoAtPathToSavedPhotosAlbum([NSString stringWithFormat:@"%s", fileName], nil, nil, nil);
+//生成TextureCache 管理器
+//pixelBuffer renderTarget  内存中  依赖 writePixelBuffer 管理器
+//texture    renderTexture  显卡中
+void CameraFile::createDataFBO() {
+    NSLog(@"createDataFBO");
+    context = [[EAGLView sharedEGLView] context];
+    GLint oldFBO;
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
     
+    glGenFramebuffers(1, &movieFrameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, movieFrameBuffer);
+    CVReturn err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, NULL, context, NULL, &coreVideoTextureCache);
+    if(err) {
+        NSLog(@"create FBO fail");
+        exit(1);
+    }
+    CVPixelBufferPoolCreatePixelBuffer(NULL, [assetWriterPixelBufferInput pixelBufferPool], &renderTarget);
+    CVOpenGLESTextureCacheCreateTextureFromImage (kCFAllocatorDefault, coreVideoTextureCache, renderTarget,
+                                              NULL, // texture attributes
+                                              GL_TEXTURE_2D,
+                                              GL_RGBA, // opengl format
+                                              (int)width,
+                                              (int)height,
+                                              GL_BGRA, // native iOS format
+                                              GL_UNSIGNED_BYTE,
+                                              0,
+                                              &renderTexture);
+
+    glBindTexture(CVOpenGLESTextureGetTarget(renderTexture), CVOpenGLESTextureGetName(renderTexture));
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, CVOpenGLESTextureGetName(renderTexture), 0);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
+}
+void CameraFile::savedToCamera() {
+    const char *fileName = this->getFileName();
+    NSLog(@"saveFileName %s", fileName);
+    
+    UISaveVideoAtPathToSavedPhotosAlbum([NSString stringWithFormat:@"%s",  fileName], nil, nil, nil);
     
 }
+void CameraFile::startWork(int width, int height) {
+    this->width = width;
+    this->height = height;
+    frameData = (uint8_t*)malloc(width*4);
+    const char *fileName = this->getFileName();
+    //fn = [NSString stringWithFormat:@"%s", fileName];
+    NSError *error = nil;
+    NSURL *url = [[NSURL alloc] initFileURLWithPath:[NSString stringWithFormat:@"%s", fileName] isDirectory:false];
+    [url autorelease];
+    
+    assetWriter = [[AVAssetWriter alloc] initWithURL:url fileType:AVFileTypeAppleM4V error:&error];
+    if(error != nil) {
+        NSLog(@"assetWriter Error %@", error);
+        NSLog(@"url %@ %s", url, fileName);
+        exit(1);
+    }
+    NSLog(@"CameraFile startWork %@", url);
+    
+    NSMutableDictionary *outputSettings = [[NSMutableDictionary alloc] init];
+    [outputSettings autorelease];
+    
+    [outputSettings setObject:AVVideoCodecH264 forKey:AVVideoCodecKey];
+    [outputSettings setObject:[NSNumber numberWithInt:width] forKey:AVVideoWidthKey];
+    [outputSettings setObject:[NSNumber numberWithInt:height] forKey:AVVideoHeightKey];
+    
+    assetWriterVideoInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:outputSettings];
+    [assetWriterVideoInput retain];
+    
+    assetWriterVideoInput.expectsMediaDataInRealTime = true;
+    
+    
+    NSDictionary *sourcePixelBufferAttributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA], kCVPixelBufferPixelFormatTypeKey,
+                                                           [NSNumber numberWithInt:width], kCVPixelBufferWidthKey,
+                                                           [NSNumber numberWithInt:height], kCVPixelBufferHeightKey,
+                                                           nil];
+    assetWriterPixelBufferInput = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:assetWriterVideoInput sourcePixelBufferAttributes:sourcePixelBufferAttributesDictionary];
+    [assetWriterPixelBufferInput retain];
+    
+    
+    [assetWriter addInput:assetWriterVideoInput];
+    startTime = [NSDate date];
+    [startTime retain];
+    
+    
+    [assetWriter startWriting];
+    [assetWriter startSessionAtSourceTime:kCMTimeZero];
+    NSLog(@"startWork");
+    
+    //必须要等待 startWriting 才能 分配renderTarget
+    this->createDataFBO();
+}
+void CameraFile::compressFrame() {
+    NSLog(@"compressFrame in Camera");
+    CVPixelBufferRef pixel_buffer = NULL;
+    CVReturn status = CVPixelBufferPoolCreatePixelBuffer(NULL, [assetWriterPixelBufferInput pixelBufferPool], &pixel_buffer);
+    if((pixel_buffer == NULL) || (status != kCVReturnSuccess)) {
+        return;
+    } else {
+        //直接读取Framebuffer 中的数据 
+        CVPixelBufferLockBaseAddress(pixel_buffer, 0);
+        
+        GLint oldFBO;
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, movieFrameBuffer);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        //绘制场景
+        CCDirector::sharedDirector()->getRunningScene()->visit();
+        
+        //GLubyte *pixelBufferData = (GLubyte *)CVPixelBufferGetBaseAddress(pixel_buffer);
+        glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
+        
+        //测试 压缩还是 read 是 瓶颈
+        //memset(pixelBufferData, 255, width*height/2*4);
+        //memset(pixelBufferData, 128, width*height/2*4);
+        
+        /*
+        glReadPixels(0, 0, width, height, GL_BGRA, GL_UNSIGNED_BYTE, pixelBufferData);
+        */
+        //测试交换数据是否是瓶颈 不是
+        /*
+        int i, j;
+        for(i = 0, j = height-1; i < j; i++, j--) {
+            memcpy(frameData, &pixelBufferData[(i*width)*4], 4*width);
+            memcpy(&pixelBufferData[(i*width)*4], &pixelBufferData[(j*width)*4], 4*width);
+            memcpy(&pixelBufferData[(j*width)*4], frameData, 4*width);
+        }
+         */
+         
+        /*
+        int i, j;
+        for(i = 0; i < height; i++) {
+            for(j = 0; j < width; j++) {
+                pixelBufferData[4*(i*width+j)+0] = 255;
+                pixelBufferData[4*(i*width+j)+1] = 255;
+                pixelBufferData[4*(i*width+j)+2] = 255;
+                pixelBufferData[4*(i*width+j)+3] = 255;
+            }
+        }
+        */
+        
+    }
+    CMTime currentTime = CMTimeMakeWithSeconds([[NSDate date] timeIntervalSinceDate:startTime], 120);
+    if (![assetWriterPixelBufferInput appendPixelBuffer:pixel_buffer withPresentationTime:currentTime]) {
+        NSLog(@"Problem appending pixel buffer at time: %lld", currentTime.value);
+    } else {
+        
+    }
+    CVPixelBufferUnlockBaseAddress(pixel_buffer, 0);
+    CVPixelBufferRelease(pixel_buffer);
+    
+}
+void CameraFile::stopWork() {
+    [assetWriterVideoInput markAsFinished];
+    [assetWriter finishWritingWithCompletionHandler:^(){savedToCamera();}];
+    NSLog(@"stopWork");
+    
+    [assetWriter release];
+    [assetWriterVideoInput release];
+    [assetWriterPixelBufferInput release];
+    [startTime release];
+    free(frameData);
+     
+}
+
