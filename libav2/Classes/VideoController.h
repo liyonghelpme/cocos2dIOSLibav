@@ -1,7 +1,6 @@
 #ifndef __VIDEO_CONTROLLER_H__
 #define __VIDEO_CONTROLLER_H__
 #include "cocos2d.h"
-#include "yuv420.h"
 #include "stdlib.h"
 #include "CameraFile.h"
 using namespace std;
@@ -16,16 +15,13 @@ public:
     virtual void update(float dt);
     ~VideoController();
     void compressCurrentFrame();
-    bool getStart() {
-        return startYet;
-    }
+    bool getStart();
     void setCamera(CameraFile *);
 private:
     string fileN;
     float MaxRecordTime; // 最大视频时间
     float frameRate;  //帧率
 
-    AVFrame *picture; //每一帧
     int outbuf_size;  
     uint8_t *outbuf;  //输出数据缓存
     uint8_t *pixelBuffer; //显卡中的RGBA 数据
@@ -45,9 +41,6 @@ private:
 
     float testTime;
 
-    AVFormatContext *oc;
-    AVOutputFormat *fmt;
-    AVStream *video_st;
     double video_pts;
     
     CameraFile *camera;

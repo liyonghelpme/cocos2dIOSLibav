@@ -4,6 +4,10 @@
 #include "cocos2d.h"
 #include "VideoController.h"
 #include "CameraFile.h"
+#include "Bomb.h"
+#include "Background.h"
+#include "Cannon.h"
+
 using namespace std;
 
 using namespace cocos2d;

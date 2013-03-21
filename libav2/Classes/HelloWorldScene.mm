@@ -51,25 +51,7 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Thonburi", 34);
-
-    // ask director the window size
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-
-    // position the label on the center of the screen
-    pLabel->setPosition( ccp(size.width / 2, size.height - 20) );
-
-    // add the label as a child to this layer
-    this->addChild(pLabel, 1);
-
-    // add "HelloWorld" splash screen"
-    CCSprite* pSprite = CCSprite::create("HelloWorld.png");
-
-    // position the sprite on the center of the screen
-    pSprite->setPosition( ccp(size.width/2, size.height/2) );
-
-    // add the sprite as a child to this layer
-    this->addChild(pSprite, 0);
+  
     
     CCMenuItemFont *item1 = CCMenuItemFont::create("start", this, menu_selector(HelloWorld::onStart));
     CCMenuItemFont *item2 = CCMenuItemFont::create("stop", this, menu_selector(HelloWorld::onStop));
@@ -85,6 +67,13 @@ bool HelloWorld::init()
     item2->setScale(2);
     item1->setPosition(ccp(0, 200));
     item2->setPosition(ccp(0, -200));
+    
+    Background *bk = Background::create();
+    addChild(bk);
+    Cannon *cannon = Cannon::create();
+    addChild(cannon);
+    cannon->setPosition(ccp(480, 320));
+    
     return true;
     
     
