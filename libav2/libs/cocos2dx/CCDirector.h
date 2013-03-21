@@ -96,7 +96,18 @@ and when to execute the Scenes.
 */
 class CC_DLL CCDirector : public CCObject, public TypeInfo
 {
+//如果开始录制屏幕 则 设定target
+private:
+    bool isRecording;
+    GLuint frameBuffer;
+    GLuint renderTarget;
+    CCSprite *recordSprite;
+    CCTexture2D *recordTexture;
 public:
+    void startRecording();
+    void stopRecording();
+    CCSprite *getRecordSprite();
+    
     CCDirector(void);
     virtual ~CCDirector(void);
     virtual bool init(void);

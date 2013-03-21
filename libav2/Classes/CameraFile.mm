@@ -87,7 +87,8 @@ void CameraFile::createDataFBO() {
     
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, CVOpenGLESTextureGetName(renderTexture), 0);
 
-    //glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
+    CCDirector::sharedDirector()->startRecording();
 }
 void CameraFile::savedToCamera() {
     const char *fileName = this->getFileName();
@@ -158,57 +159,25 @@ void CameraFile::compressFrame() {
     NSLog(@"compressFrame in Camera");
     NSLog(@"lock pixel_buffer %@", renderTarget);
     CVPixelBufferRef pixel_buffer = NULL;
-    //CVReturn status = CVPixelBufferPoolCreatePixelBuffer(NULL, [assetWriterPixelBufferInput pixelBufferPool], &pixel_buffer);
+   
     pixel_buffer = renderTarget;
     
-    //if((pixel_buffer == NULL) || (status != kCVReturnSuccess)) {
-    //    return;
-    //} else {
-        //直接读取Framebuffer 中的数据 
-        CVPixelBufferLockBaseAddress(pixel_buffer, 0);
+    //直接读取Framebuffer 中的数据
+    CVPixelBufferLockBaseAddress(pixel_buffer, 0);
         
-        //GLint oldFBO;
-        //glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
-        //glBindFramebuffer(GL_FRAMEBUFFER, movieFrameBuffer);
-        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-        //绘制场景
-        //CCDirector::sharedDirector()->getRunningScene()->visit();
-        
-        //GLubyte *pixelBufferData = (GLubyte *)CVPixelBufferGetBaseAddress(pixel_buffer);
-        //glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
-        
-        //测试 压缩还是 read 是 瓶颈
-        //memset(pixelBufferData, 255, width*height/2*4);
-        //memset(pixelBufferData, 128, width*height/2*4);
-        
-        /*
-        glReadPixels(0, 0, width, height, GL_BGRA, GL_UNSIGNED_BYTE, pixelBufferData);
-        */
-        //测试交换数据是否是瓶颈 不是
-        /*
-        int i, j;
-        for(i = 0, j = height-1; i < j; i++, j--) {
-            memcpy(frameData, &pixelBufferData[(i*width)*4], 4*width);
-            memcpy(&pixelBufferData[(i*width)*4], &pixelBufferData[(j*width)*4], 4*width);
-            memcpy(&pixelBufferData[(j*width)*4], frameData, 4*width);
-        }
-        */
-         
-         
-        /*
-        int i, j;
-        for(i = 0; i < height; i++) {
-            for(j = 0; j < width; j++) {
-                pixelBufferData[4*(i*width+j)+0] = 255;
-                pixelBufferData[4*(i*width+j)+1] = 255;
-                pixelBufferData[4*(i*width+j)+2] = 255;
-                pixelBufferData[4*(i*width+j)+3] = 255;
-            }
-        }
-        */
-        
-   // }
+    GLint oldFBO;
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, movieFrameBuffer);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //需要调整ScaleY 用于显示
+    //测试播放动画
+    CCDirector::sharedDirector()->getRecordSprite()->setScaleY(1);
+    CCDirector::sharedDirector()->getRecordSprite()->visit();
+    CCDirector::sharedDirector()->getRecordSprite()->setScaleY(-1);
+    glFlush();
+   
+    glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
+       
     CMTime currentTime = CMTimeMakeWithSeconds([[NSDate date] timeIntervalSinceDate:startTime], 120);
     if (![assetWriterPixelBufferInput appendPixelBuffer:pixel_buffer withPresentationTime:currentTime]) {
         NSLog(@"Problem appending pixel buffer at time: %lld", currentTime.value);
@@ -221,6 +190,8 @@ void CameraFile::compressFrame() {
     
 }
 void CameraFile::stopWork() {
+    CCDirector::sharedDirector()->stopRecording();
+    
     [assetWriterVideoInput markAsFinished];
     [assetWriter finishWritingWithCompletionHandler:^(){savedToCamera();}];
     NSLog(@"stopWork");

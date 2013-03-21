@@ -78,6 +78,7 @@ static CCDisplayLinkDirector *s_SharedDirector = NULL;
 #define kDefaultFPS        60  // 60 frames per second
 extern const char* cocos2dVersion(void);
 
+
 CCDirector* CCDirector::sharedDirector(void)
 {
     if (!s_SharedDirector)
@@ -88,10 +89,61 @@ CCDirector* CCDirector::sharedDirector(void)
 
     return s_SharedDirector;
 }
+CCSprite *CCDirector::getRecordSprite() {
+    return recordSprite;
+}
+void CCDirector::startRecording() {
+    if (!isRecording) {
+        GLint oldFBO;
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
+        glGenFramebuffers(1, &frameBuffer);
+        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+        glGenTextures(1, &renderTarget);
+        
+        recordTexture = new CCTexture2D();
+        //FIXME: 硬编码 尺寸
+        void *data = malloc(960*640*4);
+        memset(data, 0, 960*640*4);
+        recordTexture->initWithData(data, kCCTexture2DPixelFormat_RGBA8888, 960, 640, CCSizeMake(960, 640));
+        free(data);
+        recordTexture->setAliasTexParameters();
+        
+        renderTarget = recordTexture->getName();
+        
+        //glBindTexture(GL_TEXTURE_2D, renderTarget);
+        //glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        //glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, renderTarget, 0);
+        
+        recordSprite = CCSprite::createWithTexture(recordTexture);
+        recordSprite->retain();
+        recordSprite->setScaleY(-1);
+        recordTexture->release();
+        ccBlendFunc blend = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+        recordSprite->setBlendFunc(blend);
+        recordSprite->setAnchorPoint(ccp(0.5, 0.5));
+        recordSprite->setPosition(ccp(960/2, 640/2));
+        
+        
+        glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
+        isRecording = true;
+    }
+}
+void CCDirector::stopRecording() {
+    if (isRecording) {
+        glDeleteFramebuffers(1, &frameBuffer);
+        glDeleteTextures(1, &renderTarget);
+        recordSprite->release();
+        isRecording = false;
+    }
+}
 
 CCDirector::CCDirector(void)
 {
-
+    isRecording = false;
+    frameBuffer = 0;
+    renderTarget = 0;
 }
 
 bool CCDirector::init(void)
@@ -213,7 +265,12 @@ void CCDirector::drawScene(void)
     {
         m_pScheduler->update(m_fDeltaTime);
     }
-
+    GLint oldFBO;
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
+    
+    if (isRecording) {
+        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+    }
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     /* to avoid flickr, nextScene MUST be here: after tick and before draw.
@@ -241,7 +298,12 @@ void CCDirector::drawScene(void)
     {
         showStats();
     }
-
+    
+    if (isRecording) {
+        glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
+        //将绘制的纹理绑定到sprite上 进行绘制 进行visit
+        recordSprite->visit();
+    }
     kmGLPopMatrix();
 
     m_uTotalFrames++;
