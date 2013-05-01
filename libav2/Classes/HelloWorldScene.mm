@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 
+
 using namespace cocos2d;
 using namespace CocosDenshion;
 
@@ -74,9 +75,28 @@ bool HelloWorld::init()
     addChild(cannon);
     cannon->setPosition(ccp(480, 320));
     
+    SimpleAudioEngine::sharedEngine()->playBackgroundMusic("love.mp3", true);
+    
+    
+    
+    item1 = CCMenuItemFont::create("startAudio", this, menu_selector(HelloWorld::onRecord));
+    item2 = CCMenuItemFont::create("stopAudio", this, menu_selector(HelloWorld::stopRecord));
+    menu = CCMenu::create(item1, item2, NULL);
+    addChild(menu);
+    item1->setPosition(ccp(200, 200));
+    item2->setPosition(ccp(200, -200));
+    
     return true;
     
     
+}
+void HelloWorld::onRecord() {
+    myAudio = [MyAudio myAudio];
+    [myAudio startRecord];
+}
+void HelloWorld::stopRecord() {
+    [myAudio stopRecord];
+    [myAudio release];
 }
 void HelloWorld::onStart(CCObject *send){
     const char *fileName = camera->getFileName();

@@ -220,8 +220,9 @@
 		78DC79ED16F987D3004D4E0B /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78DC79EC16F987D3004D4E0B /* AppDelegate.mm */; };
 		78DC79FE16F988F7004D4E0B /* CameraFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78DC79F916F988F7004D4E0B /* CameraFile.mm */; };
 		78DC79FF16F988F7004D4E0B /* VideoController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78DC79FA16F988F7004D4E0B /* VideoController.mm */; };
-		78DC7A0016F988F7004D4E0B /* yuv420.c in Sources */ = {isa = PBXBuildFile; fileRef = 78DC79FC16F988F7004D4E0B /* yuv420.c */; };
 		78DC7A1316F9892D004D4E0B /* HelloWorldScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78DC7A1116F9892D004D4E0B /* HelloWorldScene.mm */; };
+		78F9223117311FD100FAC158 /* MyAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F9223017311FD100FAC158 /* MyAudio.m */; };
+		78F92233173135B400FAC158 /* love.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 78F92232173135B400FAC158 /* love.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -686,10 +687,11 @@
 		78DC79F916F988F7004D4E0B /* CameraFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CameraFile.mm; path = Classes/CameraFile.mm; sourceTree = "<group>"; };
 		78DC79FA16F988F7004D4E0B /* VideoController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VideoController.mm; path = Classes/VideoController.mm; sourceTree = "<group>"; };
 		78DC79FB16F988F7004D4E0B /* VideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoController.h; path = Classes/VideoController.h; sourceTree = "<group>"; };
-		78DC79FC16F988F7004D4E0B /* yuv420.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = yuv420.c; path = Classes/yuv420.c; sourceTree = "<group>"; };
-		78DC79FD16F988F7004D4E0B /* yuv420.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = yuv420.h; path = Classes/yuv420.h; sourceTree = "<group>"; };
 		78DC7A1116F9892D004D4E0B /* HelloWorldScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HelloWorldScene.mm; path = Classes/HelloWorldScene.mm; sourceTree = "<group>"; };
 		78DC7A1216F9892D004D4E0B /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = Classes/HelloWorldScene.h; sourceTree = "<group>"; };
+		78F9222F17311FD100FAC158 /* MyAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAudio.h; sourceTree = "<group>"; };
+		78F9223017311FD100FAC158 /* MyAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAudio.m; sourceTree = "<group>"; };
+		78F92232173135B400FAC158 /* love.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = love.mp3; path = Resources/love.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -763,6 +765,7 @@
 		78DC774116F987CD004D4E0B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				78F92232173135B400FAC158 /* love.mp3 */,
 				7824F40716FB2413007BC8B7 /* block.png */,
 				7824F40816FB2413007BC8B7 /* circle2.png */,
 				7824F40916FB2413007BC8B7 /* edge.png */,
@@ -1641,10 +1644,10 @@
 				78DC79F916F988F7004D4E0B /* CameraFile.mm */,
 				78DC79FA16F988F7004D4E0B /* VideoController.mm */,
 				78DC79FB16F988F7004D4E0B /* VideoController.h */,
-				78DC79FC16F988F7004D4E0B /* yuv420.c */,
-				78DC79FD16F988F7004D4E0B /* yuv420.h */,
 				78DC79EB16F987D3004D4E0B /* AppDelegate.h */,
 				78DC79EC16F987D3004D4E0B /* AppDelegate.mm */,
+				78F9222F17311FD100FAC158 /* MyAudio.h */,
+				78F9223017311FD100FAC158 /* MyAudio.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1717,6 +1720,7 @@
 				7824F40C16FB2413007BC8B7 /* circle2.png in Resources */,
 				7824F40D16FB2413007BC8B7 /* edge.png in Resources */,
 				7824F40E16FB2413007BC8B7 /* range_circle.png in Resources */,
+				78F92233173135B400FAC158 /* love.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1908,11 +1912,11 @@
 				78DC79ED16F987D3004D4E0B /* AppDelegate.mm in Sources */,
 				78DC79FE16F988F7004D4E0B /* CameraFile.mm in Sources */,
 				78DC79FF16F988F7004D4E0B /* VideoController.mm in Sources */,
-				78DC7A0016F988F7004D4E0B /* yuv420.c in Sources */,
 				78DC7A1316F9892D004D4E0B /* HelloWorldScene.mm in Sources */,
 				7824F40316FB21D6007BC8B7 /* Background.mm in Sources */,
 				7824F40416FB21D6007BC8B7 /* Bomb.mm in Sources */,
 				7824F40516FB21D6007BC8B7 /* Cannon.mm in Sources */,
+				78F9223117311FD100FAC158 /* MyAudio.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

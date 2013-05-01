@@ -7,6 +7,7 @@
 #include "Bomb.h"
 #include "Background.h"
 #include "Cannon.h"
+#include "MyAudio.h"
 
 using namespace std;
 
@@ -32,6 +33,10 @@ private:
     void onStop(CCObject *);
     CameraFile *camera;
     string savedFile;
+    
+    void onRecord();
+    void stopRecord();
+    MyAudio *myAudio;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
