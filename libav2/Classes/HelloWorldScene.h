@@ -8,6 +8,7 @@
 #include "Background.h"
 #include "Cannon.h"
 #include "MyAudio.h"
+#import "TestOpenAL.h"
 
 using namespace std;
 
@@ -37,6 +38,9 @@ private:
     void onRecord();
     void stopRecord();
     MyAudio *myAudio;
+    TestOpenAL *openAL;
+    void onOpenAL();
+    void stopOpenAL();
 };
 
 #endif // __HELLOWORLD_SCENE_H__

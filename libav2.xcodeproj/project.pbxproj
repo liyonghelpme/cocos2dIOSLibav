@@ -223,6 +223,14 @@
 		78DC7A1316F9892D004D4E0B /* HelloWorldScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78DC7A1116F9892D004D4E0B /* HelloWorldScene.mm */; };
 		78F9223117311FD100FAC158 /* MyAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F9223017311FD100FAC158 /* MyAudio.m */; };
 		78F92233173135B400FAC158 /* love.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 78F92232173135B400FAC158 /* love.mp3 */; };
+		78F922361731E9F800FAC158 /* MyAudioUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F922351731E9F700FAC158 /* MyAudioUnit.m */; };
+		78F922381731EFA300FAC158 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78F922371731EFA300FAC158 /* CoreAudio.framework */; };
+		78F9223F17324DB100FAC158 /* TestOpenAL.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F9223E17324DB000FAC158 /* TestOpenAL.m */; };
+		78F9251C17324F3900FAC158 /* short.caf in Resources */ = {isa = PBXBuildFile; fileRef = 78F9251B17324F3900FAC158 /* short.caf */; };
+		78F9251E1732566700FAC158 /* out.caf in Resources */ = {isa = PBXBuildFile; fileRef = 78F9251D1732566700FAC158 /* out.caf */; };
+		78F9252117325B4500FAC158 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F9252017325B4400FAC158 /* Util.m */; };
+		78F9252417326D5300FAC158 /* RecordSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78F9252317326D5200FAC158 /* RecordSystem.mm */; };
+		78F9252717326DB300FAC158 /* MyVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F9252617326DB200FAC158 /* MyVideo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -692,6 +700,19 @@
 		78F9222F17311FD100FAC158 /* MyAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAudio.h; sourceTree = "<group>"; };
 		78F9223017311FD100FAC158 /* MyAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAudio.m; sourceTree = "<group>"; };
 		78F92232173135B400FAC158 /* love.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = love.mp3; path = Resources/love.mp3; sourceTree = "<group>"; };
+		78F922341731E9F600FAC158 /* MyAudioUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyAudioUnit.h; path = Classes/MyAudioUnit.h; sourceTree = "<group>"; };
+		78F922351731E9F700FAC158 /* MyAudioUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyAudioUnit.m; path = Classes/MyAudioUnit.m; sourceTree = "<group>"; };
+		78F922371731EFA300FAC158 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		78F9223D17324DAF00FAC158 /* TestOpenAL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestOpenAL.h; path = Classes/TestOpenAL.h; sourceTree = "<group>"; };
+		78F9223E17324DB000FAC158 /* TestOpenAL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestOpenAL.m; path = Classes/TestOpenAL.m; sourceTree = "<group>"; };
+		78F9251B17324F3900FAC158 /* short.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = short.caf; path = Resources/short.caf; sourceTree = "<group>"; };
+		78F9251D1732566700FAC158 /* out.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = out.caf; path = Resources/out.caf; sourceTree = "<group>"; };
+		78F9251F17325B4300FAC158 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = Classes/Util.h; sourceTree = "<group>"; };
+		78F9252017325B4400FAC158 /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Util.m; path = Classes/Util.m; sourceTree = "<group>"; };
+		78F9252217326D5100FAC158 /* RecordSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecordSystem.h; path = Classes/RecordSystem.h; sourceTree = "<group>"; };
+		78F9252317326D5200FAC158 /* RecordSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RecordSystem.mm; path = Classes/RecordSystem.mm; sourceTree = "<group>"; };
+		78F9252517326DB100FAC158 /* MyVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyVideo.h; path = Classes/MyVideo.h; sourceTree = "<group>"; };
+		78F9252617326DB200FAC158 /* MyVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyVideo.m; path = Classes/MyVideo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -699,6 +720,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78F922381731EFA300FAC158 /* CoreAudio.framework in Frameworks */,
 				78CFE07A16FAA1B8002BEA53 /* CoreVideo.framework in Frameworks */,
 				78CFE07816FAA188002BEA53 /* CoreMedia.framework in Frameworks */,
 				78DC773916F987CD004D4E0B /* AVFoundation.framework in Frameworks */,
@@ -719,6 +741,7 @@
 		78DC772116F987CD004D4E0B = {
 			isa = PBXGroup;
 			children = (
+				78F922371731EFA300FAC158 /* CoreAudio.framework */,
 				78CFE07916FAA1B8002BEA53 /* CoreVideo.framework */,
 				78CFE07716FAA188002BEA53 /* CoreMedia.framework */,
 				78DC774016F987CD004D4E0B /* libav2 */,
@@ -758,6 +781,8 @@
 				78DC776216F987CD004D4E0B /* libs */,
 				78DC79EA16F987D3004D4E0B /* Classes */,
 				78DC79E816F987D3004D4E0B /* Supporting Files */,
+				78F9251F17325B4300FAC158 /* Util.h */,
+				78F9252017325B4400FAC158 /* Util.m */,
 			);
 			path = libav2;
 			sourceTree = "<group>";
@@ -765,6 +790,8 @@
 		78DC774116F987CD004D4E0B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				78F9251D1732566700FAC158 /* out.caf */,
+				78F9251B17324F3900FAC158 /* short.caf */,
 				78F92232173135B400FAC158 /* love.mp3 */,
 				7824F40716FB2413007BC8B7 /* block.png */,
 				7824F40816FB2413007BC8B7 /* circle2.png */,
@@ -1648,6 +1675,14 @@
 				78DC79EC16F987D3004D4E0B /* AppDelegate.mm */,
 				78F9222F17311FD100FAC158 /* MyAudio.h */,
 				78F9223017311FD100FAC158 /* MyAudio.m */,
+				78F922341731E9F600FAC158 /* MyAudioUnit.h */,
+				78F922351731E9F700FAC158 /* MyAudioUnit.m */,
+				78F9223D17324DAF00FAC158 /* TestOpenAL.h */,
+				78F9223E17324DB000FAC158 /* TestOpenAL.m */,
+				78F9252217326D5100FAC158 /* RecordSystem.h */,
+				78F9252317326D5200FAC158 /* RecordSystem.mm */,
+				78F9252517326DB100FAC158 /* MyVideo.h */,
+				78F9252617326DB200FAC158 /* MyVideo.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1721,6 +1756,8 @@
 				7824F40D16FB2413007BC8B7 /* edge.png in Resources */,
 				7824F40E16FB2413007BC8B7 /* range_circle.png in Resources */,
 				78F92233173135B400FAC158 /* love.mp3 in Resources */,
+				78F9251C17324F3900FAC158 /* short.caf in Resources */,
+				78F9251E1732566700FAC158 /* out.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1917,6 +1954,11 @@
 				7824F40416FB21D6007BC8B7 /* Bomb.mm in Sources */,
 				7824F40516FB21D6007BC8B7 /* Cannon.mm in Sources */,
 				78F9223117311FD100FAC158 /* MyAudio.m in Sources */,
+				78F922361731E9F800FAC158 /* MyAudioUnit.m in Sources */,
+				78F9223F17324DB100FAC158 /* TestOpenAL.m in Sources */,
+				78F9252117325B4500FAC158 /* Util.m in Sources */,
+				78F9252417326D5300FAC158 /* RecordSystem.mm in Sources */,
+				78F9252717326DB300FAC158 /* MyVideo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

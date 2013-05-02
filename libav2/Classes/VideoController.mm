@@ -26,6 +26,7 @@ bool VideoController::init()
     frameRate = 1./25;  //0.1s 1帧
     startYet = false;
     testTime = 10;
+    camera = new CameraFile();
 
     scheduleUpdate();
     
@@ -78,7 +79,7 @@ void VideoController::update(float dt)
 
 VideoController::~VideoController()
 {
-
+    delete camera;
 }
 
 

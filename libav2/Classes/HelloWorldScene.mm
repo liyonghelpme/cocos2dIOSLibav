@@ -58,11 +58,11 @@ bool HelloWorld::init()
     CCMenuItemFont *item2 = CCMenuItemFont::create("stop", this, menu_selector(HelloWorld::onStop));
     CCMenu *menu = CCMenu::create(item1, item2, NULL);
     addChild(menu);
-    camera = new CameraFile();
+    //camera = new CameraFile();
     
     video = VideoController::create();
     addChild(video);
-    video->setCamera(camera);
+    //video->setCamera(camera);
     
     item1->setScale(2);
     item2->setScale(2);
@@ -75,8 +75,8 @@ bool HelloWorld::init()
     addChild(cannon);
     cannon->setPosition(ccp(480, 320));
     
-    SimpleAudioEngine::sharedEngine()->playBackgroundMusic("love.mp3", true);
-    
+    //SimpleAudioEngine::sharedEngine()->playBackgroundMusic("love.mp3", true);
+    //SimpleAudioEngine::sharedEngine()->playEffect("out.caf", true);
     
     
     item1 = CCMenuItemFont::create("startAudio", this, menu_selector(HelloWorld::onRecord));
@@ -86,10 +86,25 @@ bool HelloWorld::init()
     item1->setPosition(ccp(200, 200));
     item2->setPosition(ccp(200, -200));
     
+    openAL = [[TestOpenAL alloc] init];
+    item1 = CCMenuItemFont::create("startOpenAL", this, menu_selector(HelloWorld::onOpenAL));
+    item2 = CCMenuItemFont::create("stopOpenAL", this, menu_selector(HelloWorld::stopOpenAL));
+    menu = CCMenu::create(item1, item2, NULL);
+    addChild(menu);
+    item1->setPosition(ccp(400, 200));
+    item2->setPosition(ccp(400, -200));
+    
     return true;
     
     
 }
+void HelloWorld::onOpenAL() {
+    [openAL playSound];
+}
+void HelloWorld::stopOpenAL() {
+    [openAL stopSound];
+}
+
 void HelloWorld::onRecord() {
     myAudio = [MyAudio myAudio];
     [myAudio startRecord];
@@ -99,10 +114,10 @@ void HelloWorld::stopRecord() {
     [myAudio release];
 }
 void HelloWorld::onStart(CCObject *send){
-    const char *fileName = camera->getFileName();
-    CCLOG("fileName %s", fileName);
-    savedFile = string(fileName);
-    video->startWork(960, 640, 960, 640, fileName, 1./30);
+    //const char *fileName = camera->getFileName();
+    //CCLOG("fileName %s", fileName);
+    //savedFile = string(fileName);
+    video->startWork(960, 640, 960, 640, "", 1./30);
     
 }
 HelloWorld::~HelloWorld() {
