@@ -28,7 +28,6 @@ public:
     static CCScene *scene();
     
     VideoController *videoController;
-    virtual void registerWithTouchDispatcher();
     virtual bool ccTouchBegan(CCTouch *, CCEvent *);
     
     virtual void startRecord();

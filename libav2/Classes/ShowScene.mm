@@ -7,10 +7,17 @@
 //
 
 #include "ShowScene.h"
+//阻塞后面场景的touch事件
+//禁止到HelloWorld 场景所有的touch 事件
 bool ShowScene::init(){
     CCLayer::init();
     
     setTouchEnabled(true);
+    setTouchMode(kCCTouchesOneByOne);
+    //因为cocos2d 的菜单的优先级是 －128 这里添加一个层优先级比菜单大 但是我自身的菜单的优先级也要调大才可以的
+    //setTouchPriority(-129);
+    //也可以调整HelloWorld 中菜单等的优先级
+    
     backgroundPic = CCLayerColor::create(ccc4BFromccc4F(ccc4f(1, 1, 1, 1)));
     addChild(backgroundPic, -1);
     
@@ -25,14 +32,15 @@ bool ShowScene::init(){
     CCMenu *menu = CCMenu::create(font, NULL);
     addChild(menu);
     font->setPosition(ccp(50, 100));
+    //自身的菜单优先级要大于背景
+    //menu->setTouchPriority(-130);
     return true;
 }
 //阻塞所有到renderLayer 的touch事件
-void ShowScene::registerWithTouchDispatcher(){
-    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
-}
+
 bool ShowScene::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
+    CCLog("touch");
     return true;
 }
 void ShowScene::setRecordScene(RecordScene * r) {
