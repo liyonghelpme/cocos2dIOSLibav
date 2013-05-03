@@ -6,6 +6,7 @@
 //
 //
 #import <AVFoundation/AVFoundation.h>
+#import "RemoveTempVideo.h"
 
 #ifndef __CAMERA_H__
 #define __CAMERA_H__
@@ -18,6 +19,7 @@ public:
     void startWork(int width, int height);
     void compressFrame();
     void stopWork();
+    ~CameraFile();
 private:
     uint8_t *frameData;
     AVAssetWriter *assetWriter;
@@ -37,5 +39,8 @@ private:
     EAGLContext *context;
     CVPixelBufferRef renderTarget;
     CVOpenGLESTextureRef renderTexture;
+    RemoveTempVideo *removeTempVideo;
+    void mergeAudio();
+    void releaseAsset();
 };
 #endif

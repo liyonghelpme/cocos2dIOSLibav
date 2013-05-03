@@ -16,6 +16,7 @@ using namespace cocos2d;
 CameraFile::CameraFile() {
     NSDate *curTime = [NSDate date];
     ct = int([curTime timeIntervalSince1970]);
+    removeTempVideo = [[RemoveTempVideo alloc] init];
     movieFrameBuffer = 0;
 }
 const char *CameraFile::getFileName() {
@@ -91,11 +92,35 @@ void CameraFile::createDataFBO() {
     CCDirector::sharedDirector()->startRecording();
 }
 void CameraFile::savedToCamera() {
-    const char *fileName = this->getFileName();
-    NSLog(@"saveFileName %s", fileName);
     
-    UISaveVideoAtPathToSavedPhotosAlbum([NSString stringWithFormat:@"%s",  fileName], nil, nil, nil);
+    NSLog(@"savedToCamera");
+    //mergeAudio();
     
+    const char *fileName = getFileName();
+    NSLog(@"savedToCamera File %s", fileName);
+    
+    //NSString *videoPath = [NSString stringWithFormat:@"%s", fileName];
+    /*
+    NSString *videoPath = [[NSBundle mainBundle] pathForResource:@"IMG_0697" ofType:@"mov"];
+    NSURL *videoURL = [NSURL URLWithString:videoPath];
+    AVURLAsset *videoasset = [[AVURLAsset alloc] initWithURL:videoURL options:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES] , AVURLAssetPreferPreciseDurationAndTimingKey, nil]];
+    AVKeyValueStatus d = [videoasset statusOfValueForKey:@"duration" error:nil];
+    NSLog(@"duration ready %d", d);
+    [videoasset loadValuesAsynchronouslyForKeys:[NSArray arrayWithObjects:@"duration", @"isComposable", nil] completionHandler:^{
+        NSLog(@"videoasset real duration %f", CMTimeGetSeconds(videoasset.duration));
+        AVKeyValueStatus d = [videoasset statusOfValueForKey:@"duration" error:nil];
+        NSLog(@"duration ready 222 %d", d);
+    }];
+    
+    NSLog(@"videoasset descript %@", videoasset.description);
+    NSLog(@"debug %@", videoasset.debugDescription);
+    NSLog(@"videoasset %d", videoasset.providesPreciseDurationAndTiming);
+    NSLog(@"video duration %lld", videoasset.duration.value);
+    NSLog(@"video saved? %d", videoasset.isCompatibleWithSavedPhotosAlbum);
+    NSLog(@"composible %d", videoasset.isComposable);
+    */
+    
+    UISaveVideoAtPathToSavedPhotosAlbum([NSString stringWithFormat:@"%s",  fileName], removeTempVideo, @selector(finishCopy:error:context:), nil);
 }
 void CameraFile::startWork(int width, int height) {
     this->width = width;
@@ -107,7 +132,7 @@ void CameraFile::startWork(int width, int height) {
     NSURL *url = [[NSURL alloc] initFileURLWithPath:[NSString stringWithFormat:@"%s", fileName] isDirectory:false];
     [url autorelease];
     
-    assetWriter = [[AVAssetWriter alloc] initWithURL:url fileType:AVFileTypeAppleM4V error:&error];
+    assetWriter = [[AVAssetWriter alloc] initWithURL:url fileType:AVFileTypeQuickTimeMovie error:&error];
     if(error != nil) {
         NSLog(@"assetWriter Error %@", error);
         NSLog(@"url %@ %s", url, fileName);
@@ -157,7 +182,7 @@ void CameraFile::compressFrame() {
     //结束绘制 导出数据
     //glFinish();
     NSLog(@"compressFrame in Camera");
-    NSLog(@"lock pixel_buffer %@", renderTarget);
+    //NSLog(@"lock pixel_buffer %@", renderTarget);
     CVPixelBufferRef pixel_buffer = NULL;
    
     pixel_buffer = renderTarget;
@@ -189,13 +214,75 @@ void CameraFile::compressFrame() {
     //CVPixelBufferRelease(pixel_buffer);
     
 }
-void CameraFile::stopWork() {
-    CCDirector::sharedDirector()->stopRecording();
+void CameraFile::mergeAudio() {
     
-    [assetWriterVideoInput markAsFinished];
-    [assetWriter finishWritingWithCompletionHandler:^(){savedToCamera();}];
-    NSLog(@"stopWork");
+    NSString *audioPath = [[NSBundle mainBundle] pathForResource:@"love" ofType:@"mp3"];
+    NSURL *audioUrl = [NSURL fileURLWithPath:audioPath];
+    AVURLAsset *audioasset = [[AVURLAsset alloc] initWithURL:audioUrl options:nil];
     
+    const char *fileName = this->getFileName();
+    NSLog(@"saveFileName %s", fileName);
+    NSString *videoPath = [NSString stringWithFormat:@"%s", fileName];
+    NSURL *videoURL = [NSURL URLWithString:videoPath];
+    AVURLAsset *videoasset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
+    
+    NSLog(@"audio duration %lld", audioasset.duration.value);
+    NSLog(@"video duration %lld", videoasset.duration.value);
+    
+    //movie  audio video
+    AVMutableComposition *mixComposition = [AVMutableComposition composition];
+    NSString *moviepath = [NSString stringWithFormat:@"merge-%s", fileName];
+    NSURL *movieurl = [NSURL URLWithString:moviepath];
+    NSLog(@"movie path %@", moviepath);
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:moviepath]) {
+        [[NSFileManager defaultManager] removeItemAtPath:moviepath error:nil];
+    }
+    NSError *error;
+    
+    AVMutableCompositionTrack *compositionA = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
+    AVAssetTrack *clipAudio = [[audioasset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0];
+    [compositionA insertTimeRange:CMTimeRangeMake(kCMTimeZero, audioasset.duration) ofTrack:clipAudio atTime:kCMTimeZero error:&error];
+    if (error) {
+        NSLog(@"error composite audio %@", [error localizedDescription]);
+    }
+    
+    
+    AVMutableCompositionTrack *compositionB = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
+    AVAssetTrack *clipVideo = [[videoasset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    
+    [compositionB insertTimeRange:CMTimeRangeMake(kCMTimeZero, videoasset.duration) ofTrack:clipVideo atTime:kCMTimeZero error:&error];
+    if (error) {
+        NSLog(@"error compositionVideo  %@", [error localizedDescription]);
+    }
+    
+    
+    
+    AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetHighestQuality];
+    exporter.outputFileType = AVFileTypeQuickTimeMovie;
+    exporter.outputURL = movieurl;
+    [exporter exportAsynchronouslyWithCompletionHandler:^{
+        switch ([exporter status]) {
+            case AVAssetExportSessionStatusFailed:
+                NSLog(@"Export Failed %@", [[exporter error] localizedDescription]);
+                break;
+            case AVAssetExportSessionStatusCancelled:
+                NSLog(@"Export cancel ");
+                break;
+            case AVAssetExportSessionStatusCompleted:
+                NSLog(@"Export Successful ");
+            default:
+                break;
+        }
+        //remove video remove movie
+        [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
+        UISaveVideoAtPathToSavedPhotosAlbum(moviepath, removeTempVideo, @selector(finishCopy:error:context:), nil);
+        [audioasset release];
+        [videoasset release];
+        [exporter release];
+    }];
+}
+void CameraFile::releaseAsset(){
     [assetWriter release];
     [assetWriterVideoInput release];
     [assetWriterPixelBufferInput release];
@@ -203,4 +290,19 @@ void CameraFile::stopWork() {
     free(frameData);
     destroyDataFBO();
 }
-
+void CameraFile::stopWork() {
+    CCDirector::sharedDirector()->stopRecording();
+    
+    [assetWriterVideoInput markAsFinished];
+    //[assetWriter finishWritingWithCompletionHandler:^(){savedToCamera();}];
+    BOOL finish = [assetWriter finishWriting];
+    NSLog(@"finish");
+    if(finish) {
+        savedToCamera();
+    }
+    releaseAsset();
+    NSLog(@"stopWork");
+}
+CameraFile::~CameraFile() {
+    [removeTempVideo release];
+}

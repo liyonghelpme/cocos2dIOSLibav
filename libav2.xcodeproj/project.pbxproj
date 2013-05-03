@@ -14,6 +14,7 @@
 		7824F40C16FB2413007BC8B7 /* circle2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7824F40816FB2413007BC8B7 /* circle2.png */; };
 		7824F40D16FB2413007BC8B7 /* edge.png in Resources */ = {isa = PBXBuildFile; fileRef = 7824F40916FB2413007BC8B7 /* edge.png */; };
 		7824F40E16FB2413007BC8B7 /* range_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 7824F40A16FB2413007BC8B7 /* range_circle.png */; };
+		784AED481733516F0083AF61 /* IMG_0697.mov in Resources */ = {isa = PBXBuildFile; fileRef = 784AED471733516F0083AF61 /* IMG_0697.mov */; };
 		78CFE07816FAA188002BEA53 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78CFE07716FAA188002BEA53 /* CoreMedia.framework */; };
 		78CFE07A16FAA1B8002BEA53 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78CFE07916FAA1B8002BEA53 /* CoreVideo.framework */; };
 		78DC773116F987CD004D4E0B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DC773016F987CD004D4E0B /* QuartzCore.framework */; };
@@ -230,7 +231,7 @@
 		78F9251E1732566700FAC158 /* out.caf in Resources */ = {isa = PBXBuildFile; fileRef = 78F9251D1732566700FAC158 /* out.caf */; };
 		78F9252117325B4500FAC158 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F9252017325B4400FAC158 /* Util.m */; };
 		78F9252417326D5300FAC158 /* RecordSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78F9252317326D5200FAC158 /* RecordSystem.mm */; };
-		78F9252717326DB300FAC158 /* MyVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F9252617326DB200FAC158 /* MyVideo.m */; };
+		78F9252A1732911A00FAC158 /* RemoveTempVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F925291732911900FAC158 /* RemoveTempVideo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -244,6 +245,7 @@
 		7824F40816FB2413007BC8B7 /* circle2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = circle2.png; path = Resources/circle2.png; sourceTree = "<group>"; };
 		7824F40916FB2413007BC8B7 /* edge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = edge.png; path = Resources/edge.png; sourceTree = "<group>"; };
 		7824F40A16FB2413007BC8B7 /* range_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = range_circle.png; path = Resources/range_circle.png; sourceTree = "<group>"; };
+		784AED471733516F0083AF61 /* IMG_0697.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = IMG_0697.mov; path = Resources/IMG_0697.mov; sourceTree = "<group>"; };
 		78CFE07716FAA188002BEA53 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		78CFE07916FAA1B8002BEA53 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		78DC772C16F987CD004D4E0B /* libav2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = libav2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -711,8 +713,8 @@
 		78F9252017325B4400FAC158 /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Util.m; path = Classes/Util.m; sourceTree = "<group>"; };
 		78F9252217326D5100FAC158 /* RecordSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecordSystem.h; path = Classes/RecordSystem.h; sourceTree = "<group>"; };
 		78F9252317326D5200FAC158 /* RecordSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RecordSystem.mm; path = Classes/RecordSystem.mm; sourceTree = "<group>"; };
-		78F9252517326DB100FAC158 /* MyVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyVideo.h; path = Classes/MyVideo.h; sourceTree = "<group>"; };
-		78F9252617326DB200FAC158 /* MyVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyVideo.m; path = Classes/MyVideo.m; sourceTree = "<group>"; };
+		78F925281732911800FAC158 /* RemoveTempVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemoveTempVideo.h; path = Classes/RemoveTempVideo.h; sourceTree = "<group>"; };
+		78F925291732911900FAC158 /* RemoveTempVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RemoveTempVideo.m; path = Classes/RemoveTempVideo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -790,6 +792,7 @@
 		78DC774116F987CD004D4E0B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				784AED471733516F0083AF61 /* IMG_0697.mov */,
 				78F9251D1732566700FAC158 /* out.caf */,
 				78F9251B17324F3900FAC158 /* short.caf */,
 				78F92232173135B400FAC158 /* love.mp3 */,
@@ -1681,8 +1684,8 @@
 				78F9223E17324DB000FAC158 /* TestOpenAL.m */,
 				78F9252217326D5100FAC158 /* RecordSystem.h */,
 				78F9252317326D5200FAC158 /* RecordSystem.mm */,
-				78F9252517326DB100FAC158 /* MyVideo.h */,
-				78F9252617326DB200FAC158 /* MyVideo.m */,
+				78F925281732911800FAC158 /* RemoveTempVideo.h */,
+				78F925291732911900FAC158 /* RemoveTempVideo.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1758,6 +1761,7 @@
 				78F92233173135B400FAC158 /* love.mp3 in Resources */,
 				78F9251C17324F3900FAC158 /* short.caf in Resources */,
 				78F9251E1732566700FAC158 /* out.caf in Resources */,
+				784AED481733516F0083AF61 /* IMG_0697.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1958,7 +1962,7 @@
 				78F9223F17324DB100FAC158 /* TestOpenAL.m in Sources */,
 				78F9252117325B4500FAC158 /* Util.m in Sources */,
 				78F9252417326D5300FAC158 /* RecordSystem.mm in Sources */,
-				78F9252717326DB300FAC158 /* MyVideo.m in Sources */,
+				78F9252A1732911A00FAC158 /* RemoveTempVideo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
