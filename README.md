@@ -13,26 +13,36 @@
 获取IOS上面的路径传给C++代码处理
 
 
+
 RecordScene 包含两个子对象
 ====
 
+
 ShowScene  用于展示
-=======
+------
 设定背景图像 setBackground
--------
+
 设定recordScene  
--------
 
 HelloWorld  用于场景
-======
+------
 onStart 开始录制视频 组装RecordScene
-------
+
 stopRecord 停止录制视频 时调用的清理操作
-------
+
 update  可以设定开始 和 最后视频frame 以及中间的战斗过程 
-------
+
 recordScene 设定recordScene 用于和另外场景通信
-------
+
+流程
+======
+1. HelloWorld  onStart 
+2. RecordScene startRecord
+3. ShowScene   onStop
+
+实际使用中
+=======
+HelloWorld 中update 方法来监测状态变化 在RecordScene 中处理录制视频结束
 
 
 
