@@ -581,7 +581,8 @@ void CCNode::addChild(CCNode *child, int zOrder, int tag)
     this->insertChild(child, zOrder);
 
     child->m_nTag = tag;
-
+    
+    //CCLog("child parent %x %x", child, this);
     child->setParent(this);
     child->setOrderOfArrival(s_globalOrderOfArrival++);
 

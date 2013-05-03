@@ -282,6 +282,7 @@ void CCDirector::drawScene(void)
         
     }
     
+    //使用 0 作为showLayer 显示
     GLint oldFBO;
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
     
@@ -311,26 +312,21 @@ void CCDirector::drawScene(void)
             m_pRunningScene->visit();
         }
     }
-
-    // draw the notifications node
-    if (m_pNotificationNode)
-    {
-        m_pNotificationNode->visit();
+    //录制的时候不显示提示
+    if (!isRecording) {
+        // draw the notifications node
+        if (m_pNotificationNode)
+        {
+            m_pNotificationNode->visit();
+        }
+        
+        if (m_bDisplayStats)
+        {
+            showStats();
+        }
     }
     
-    if (m_bDisplayStats)
-    {
-        showStats();
-    }
     
-    if (isRecording) {
-        glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
-        //将绘制的纹理绑定到sprite上 进行绘制 进行visit
-        //recordSprite->visit();
-        //显示showLayer
-        if(showLayer)
-            showLayer->visit();
-    }
     kmGLPopMatrix();
 
     m_uTotalFrames++;
@@ -339,6 +335,23 @@ void CCDirector::drawScene(void)
     if (m_pobOpenGLView)
     {
         m_pobOpenGLView->swapBuffers();
+    }
+    
+    //显示showLayer
+    //需要先绑定framebuffer 再清理数据
+    if (isRecording) {
+        glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        //将绘制的纹理绑定到sprite上 进行绘制 进行visit
+        //recordSprite->visit();
+        //显示showLayer
+        if(showLayer) {
+            kmGLPushMatrix();
+            showLayer->visit();
+            kmGLPopMatrix();
+        }
+        if(m_pobOpenGLView)
+            m_pobOpenGLView->swapBuffers();
     }
     
     if (m_bDisplayStats)

@@ -11,8 +11,8 @@ bool ShowScene::init(){
     CCLayer::init();
     
     setTouchEnabled(true);
-    CCLayerColor *back = CCLayerColor::create(ccc4BFromccc4F(ccc4f(1, 1, 1, 1)));
-    addChild(back);
+    backgroundPic = CCLayerColor::create(ccc4BFromccc4F(ccc4f(1, 1, 1, 1)));
+    addChild(backgroundPic, -1);
     
     
     CCLabelTTF *label = CCLabelTTF::create("This is a Show Scene", "Arial", 30);
@@ -35,7 +35,12 @@ bool ShowScene::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     return true;
 }
+void ShowScene::setRecordScene(RecordScene * r) {
+    recordScene = r;
+}
 void ShowScene::onStop() {
+    recordScene->stopRecord();
+    /*
     //renderLayer->retain();
     renderLayer->removeFromParent();
     CCScene *scene = CCScene::create();
@@ -44,8 +49,10 @@ void ShowScene::onStop() {
     
     CCDirector::sharedDirector()->replaceScene(scene);
     videoController->stopWork();
+    */
 }
-void ShowScene::setBackground(CCSprite *s) {
+void ShowScene::setBackground(CCNode *s) {
+    backgroundPic->removeFromParent();
     backgroundPic = s;
     addChild(s, -1);
 }
@@ -62,4 +69,11 @@ CCScene *ShowScene::scene() {
 void ShowScene::setVideoController(VideoController *video) {
     CCLog("video in %x", video);
     videoController = video;
+}
+
+void ShowScene::startRecord() {
+    
+}
+void ShowScene::stopRecord() {
+    
 }

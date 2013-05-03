@@ -10,11 +10,12 @@
 #include "MyAudio.h"
 #import "TestOpenAL.h"
 #include "ShowScene.h"
+#include "RecordScene.h"
 
 using namespace std;
 
 using namespace cocos2d;
-class HelloWorld : public cocos2d::CCLayer
+class HelloWorld : public cocos2d::CCLayer 
 {
 public:
     // Method 'init' in cocos2d-x returns bool, instead of 'id' in cocos2d-iphone (an object pointer)
@@ -29,6 +30,18 @@ public:
     // preprocessor macro for "static create()" constructor ( node() deprecated )
     CREATE_FUNC(HelloWorld);
     ~HelloWorld();
+    virtual void update(float);
+    bool inRecord;
+    float passTime;
+    int currentFrame;
+    
+    CCNode *tempScreen;
+    CCLabelTTF *word;
+    virtual void onEnter();
+    virtual void onExit();
+    virtual void stopRecord();
+    virtual void startRecord();
+    RecordScene *recordScene;
 private:
     VideoController *video;
     void onStart(CCObject *);
@@ -37,12 +50,16 @@ private:
     string savedFile;
     
     void onRecord();
-    void stopRecord();
+    void stopR();
     MyAudio *myAudio;
     TestOpenAL *openAL;
     void onOpenAL();
     void stopOpenAL();
     ShowScene *show;
+    CCNode *menuLayer;
+    CCNode *gameLayer;
+    
+    CCSprite *makeBackScreen();
 };
 
 #endif // __HELLOWORLD_SCENE_H__

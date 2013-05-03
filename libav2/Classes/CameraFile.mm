@@ -294,12 +294,15 @@ void CameraFile::stopWork() {
     CCDirector::sharedDirector()->stopRecording();
     
     [assetWriterVideoInput markAsFinished];
-    //[assetWriter finishWritingWithCompletionHandler:^(){savedToCamera();}];
+    [assetWriter finishWritingWithCompletionHandler:^(){savedToCamera();}];
+    /*
     BOOL finish = [assetWriter finishWriting];
     NSLog(@"finish");
     if(finish) {
         savedToCamera();
     }
+    */
+    
     releaseAsset();
     NSLog(@"stopWork");
 }

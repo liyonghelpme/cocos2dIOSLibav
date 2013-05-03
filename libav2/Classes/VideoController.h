@@ -3,10 +3,11 @@
 #include "cocos2d.h"
 #include "stdlib.h"
 #include "CameraFile.h"
+
 using namespace std;
 
 using namespace cocos2d;
-class VideoController : public CCNode {
+class VideoController : public CCNode{
 public:
     static VideoController *create();
     virtual bool init();
@@ -19,6 +20,7 @@ public:
     void setCamera(CameraFile *);
     virtual void onEnter();
     virtual void onExit();
+    
 private:
     string fileN;
     float MaxRecordTime; // 最大视频时间

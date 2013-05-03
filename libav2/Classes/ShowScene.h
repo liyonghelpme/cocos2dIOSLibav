@@ -12,16 +12,17 @@
 #include <iostream>
 #include "cocos2d.h"
 #include "VideoController.h"
+#include "RecordScene.h"
 
 using namespace cocos2d;
 class ShowScene : public cocos2d::CCLayer{
 public:
     CCNode *renderLayer;
-    CCSprite *backgroundPic;
+    CCNode *backgroundPic;
     virtual bool init();
     CREATE_FUNC(ShowScene);
     
-    void setBackground(CCSprite *back);
+    void setBackground(CCNode *back);
     void setRenderLayer(CCNode *n);
     void setVideoController(VideoController *);
     static CCScene *scene();
@@ -29,6 +30,11 @@ public:
     VideoController *videoController;
     virtual void registerWithTouchDispatcher();
     virtual bool ccTouchBegan(CCTouch *, CCEvent *);
+    
+    virtual void startRecord();
+    virtual void stopRecord();
+    RecordScene *recordScene;
+    void setRecordScene(RecordScene *);
 private:
     void onStop();
 };

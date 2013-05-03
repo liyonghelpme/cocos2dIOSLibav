@@ -17,6 +17,7 @@ VideoController *VideoController::create()
     return pRet;
 }
 
+
 //时间2s钟
 //每秒10帧
 bool VideoController::init()
@@ -57,7 +58,7 @@ void VideoController::setCamera(CameraFile *c) {
     camera = c;
 }
 void VideoController::compressCurrentFrame() {
-    CCLog("compressFrame in VideoController");
+    //CCLog("compressFrame in VideoController");
     camera->compressFrame();
 }
 
@@ -74,7 +75,7 @@ void VideoController::update(float dt)
             totalTime += dt;
             passTime += dt;
             if(passTime >= frameRate) {
-                CCLog("update %f %f %f %f", totalTime, MaxRecordTime, passTime, frameRate);
+                //CCLog("update %f %f %f %f", totalTime, MaxRecordTime, passTime, frameRate);
                 passTime -=  frameRate;
                 compressCurrentFrame();
                 frameCount += 1;

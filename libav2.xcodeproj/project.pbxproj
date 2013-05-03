@@ -16,6 +16,7 @@
 		7824F40E16FB2413007BC8B7 /* range_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 7824F40A16FB2413007BC8B7 /* range_circle.png */; };
 		784AED481733516F0083AF61 /* IMG_0697.mov in Resources */ = {isa = PBXBuildFile; fileRef = 784AED471733516F0083AF61 /* IMG_0697.mov */; };
 		784AED4E173380C30083AF61 /* ShowScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 784AED4D173380C30083AF61 /* ShowScene.mm */; };
+		784AED511733955A0083AF61 /* RecordScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 784AED4F1733955A0083AF61 /* RecordScene.mm */; };
 		78CFE07816FAA188002BEA53 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78CFE07716FAA188002BEA53 /* CoreMedia.framework */; };
 		78CFE07A16FAA1B8002BEA53 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78CFE07916FAA1B8002BEA53 /* CoreVideo.framework */; };
 		78DC773116F987CD004D4E0B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DC773016F987CD004D4E0B /* QuartzCore.framework */; };
@@ -230,7 +231,6 @@
 		78F9251C17324F3900FAC158 /* short.caf in Resources */ = {isa = PBXBuildFile; fileRef = 78F9251B17324F3900FAC158 /* short.caf */; };
 		78F9251E1732566700FAC158 /* out.caf in Resources */ = {isa = PBXBuildFile; fileRef = 78F9251D1732566700FAC158 /* out.caf */; };
 		78F9252117325B4500FAC158 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F9252017325B4400FAC158 /* Util.m */; };
-		78F9252417326D5300FAC158 /* RecordSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78F9252317326D5200FAC158 /* RecordSystem.mm */; };
 		78F9252A1732911A00FAC158 /* RemoveTempVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F925291732911900FAC158 /* RemoveTempVideo.m */; };
 /* End PBXBuildFile section */
 
@@ -248,6 +248,8 @@
 		784AED471733516F0083AF61 /* IMG_0697.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = IMG_0697.mov; path = Resources/IMG_0697.mov; sourceTree = "<group>"; };
 		784AED4C173380C30083AF61 /* ShowScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowScene.h; path = Classes/ShowScene.h; sourceTree = "<group>"; };
 		784AED4D173380C30083AF61 /* ShowScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ShowScene.mm; path = Classes/ShowScene.mm; sourceTree = "<group>"; };
+		784AED4F1733955A0083AF61 /* RecordScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RecordScene.mm; path = Classes/RecordScene.mm; sourceTree = "<group>"; };
+		784AED501733955A0083AF61 /* RecordScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecordScene.h; path = Classes/RecordScene.h; sourceTree = "<group>"; };
 		78CFE07716FAA188002BEA53 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		78CFE07916FAA1B8002BEA53 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		78DC772C16F987CD004D4E0B /* libav2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = libav2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -711,8 +713,6 @@
 		78F9251D1732566700FAC158 /* out.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = out.caf; path = Resources/out.caf; sourceTree = "<group>"; };
 		78F9251F17325B4300FAC158 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = Classes/Util.h; sourceTree = "<group>"; };
 		78F9252017325B4400FAC158 /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Util.m; path = Classes/Util.m; sourceTree = "<group>"; };
-		78F9252217326D5100FAC158 /* RecordSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecordSystem.h; path = Classes/RecordSystem.h; sourceTree = "<group>"; };
-		78F9252317326D5200FAC158 /* RecordSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RecordSystem.mm; path = Classes/RecordSystem.mm; sourceTree = "<group>"; };
 		78F925281732911800FAC158 /* RemoveTempVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemoveTempVideo.h; path = Classes/RemoveTempVideo.h; sourceTree = "<group>"; };
 		78F925291732911900FAC158 /* RemoveTempVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RemoveTempVideo.m; path = Classes/RemoveTempVideo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1682,10 +1682,10 @@
 				78F9223017311FD100FAC158 /* MyAudio.m */,
 				78F9223D17324DAF00FAC158 /* TestOpenAL.h */,
 				78F9223E17324DB000FAC158 /* TestOpenAL.m */,
-				78F9252217326D5100FAC158 /* RecordSystem.h */,
-				78F9252317326D5200FAC158 /* RecordSystem.mm */,
 				78F925281732911800FAC158 /* RemoveTempVideo.h */,
 				78F925291732911900FAC158 /* RemoveTempVideo.m */,
+				784AED4F1733955A0083AF61 /* RecordScene.mm */,
+				784AED501733955A0083AF61 /* RecordScene.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1960,9 +1960,9 @@
 				78F9223117311FD100FAC158 /* MyAudio.m in Sources */,
 				78F9223F17324DB100FAC158 /* TestOpenAL.m in Sources */,
 				78F9252117325B4500FAC158 /* Util.m in Sources */,
-				78F9252417326D5300FAC158 /* RecordSystem.mm in Sources */,
 				78F9252A1732911A00FAC158 /* RemoveTempVideo.m in Sources */,
 				784AED4E173380C30083AF61 /* ShowScene.mm in Sources */,
+				784AED511733955A0083AF61 /* RecordScene.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
