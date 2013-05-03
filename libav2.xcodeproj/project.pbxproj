@@ -15,6 +15,7 @@
 		7824F40D16FB2413007BC8B7 /* edge.png in Resources */ = {isa = PBXBuildFile; fileRef = 7824F40916FB2413007BC8B7 /* edge.png */; };
 		7824F40E16FB2413007BC8B7 /* range_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 7824F40A16FB2413007BC8B7 /* range_circle.png */; };
 		784AED481733516F0083AF61 /* IMG_0697.mov in Resources */ = {isa = PBXBuildFile; fileRef = 784AED471733516F0083AF61 /* IMG_0697.mov */; };
+		784AED4E173380C30083AF61 /* ShowScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 784AED4D173380C30083AF61 /* ShowScene.mm */; };
 		78CFE07816FAA188002BEA53 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78CFE07716FAA188002BEA53 /* CoreMedia.framework */; };
 		78CFE07A16FAA1B8002BEA53 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78CFE07916FAA1B8002BEA53 /* CoreVideo.framework */; };
 		78DC773116F987CD004D4E0B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DC773016F987CD004D4E0B /* QuartzCore.framework */; };
@@ -224,7 +225,6 @@
 		78DC7A1316F9892D004D4E0B /* HelloWorldScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78DC7A1116F9892D004D4E0B /* HelloWorldScene.mm */; };
 		78F9223117311FD100FAC158 /* MyAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F9223017311FD100FAC158 /* MyAudio.m */; };
 		78F92233173135B400FAC158 /* love.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 78F92232173135B400FAC158 /* love.mp3 */; };
-		78F922361731E9F800FAC158 /* MyAudioUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F922351731E9F700FAC158 /* MyAudioUnit.m */; };
 		78F922381731EFA300FAC158 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78F922371731EFA300FAC158 /* CoreAudio.framework */; };
 		78F9223F17324DB100FAC158 /* TestOpenAL.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F9223E17324DB000FAC158 /* TestOpenAL.m */; };
 		78F9251C17324F3900FAC158 /* short.caf in Resources */ = {isa = PBXBuildFile; fileRef = 78F9251B17324F3900FAC158 /* short.caf */; };
@@ -246,6 +246,8 @@
 		7824F40916FB2413007BC8B7 /* edge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = edge.png; path = Resources/edge.png; sourceTree = "<group>"; };
 		7824F40A16FB2413007BC8B7 /* range_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = range_circle.png; path = Resources/range_circle.png; sourceTree = "<group>"; };
 		784AED471733516F0083AF61 /* IMG_0697.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = IMG_0697.mov; path = Resources/IMG_0697.mov; sourceTree = "<group>"; };
+		784AED4C173380C30083AF61 /* ShowScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowScene.h; path = Classes/ShowScene.h; sourceTree = "<group>"; };
+		784AED4D173380C30083AF61 /* ShowScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ShowScene.mm; path = Classes/ShowScene.mm; sourceTree = "<group>"; };
 		78CFE07716FAA188002BEA53 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		78CFE07916FAA1B8002BEA53 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		78DC772C16F987CD004D4E0B /* libav2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = libav2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -702,8 +704,6 @@
 		78F9222F17311FD100FAC158 /* MyAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAudio.h; sourceTree = "<group>"; };
 		78F9223017311FD100FAC158 /* MyAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAudio.m; sourceTree = "<group>"; };
 		78F92232173135B400FAC158 /* love.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = love.mp3; path = Resources/love.mp3; sourceTree = "<group>"; };
-		78F922341731E9F600FAC158 /* MyAudioUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyAudioUnit.h; path = Classes/MyAudioUnit.h; sourceTree = "<group>"; };
-		78F922351731E9F700FAC158 /* MyAudioUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyAudioUnit.m; path = Classes/MyAudioUnit.m; sourceTree = "<group>"; };
 		78F922371731EFA300FAC158 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		78F9223D17324DAF00FAC158 /* TestOpenAL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestOpenAL.h; path = Classes/TestOpenAL.h; sourceTree = "<group>"; };
 		78F9223E17324DB000FAC158 /* TestOpenAL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestOpenAL.m; path = Classes/TestOpenAL.m; sourceTree = "<group>"; };
@@ -1662,6 +1662,8 @@
 		78DC79EA16F987D3004D4E0B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				784AED4C173380C30083AF61 /* ShowScene.h */,
+				784AED4D173380C30083AF61 /* ShowScene.mm */,
 				7824F3FD16FB21D5007BC8B7 /* Background.mm */,
 				7824F3FE16FB21D5007BC8B7 /* Background.h */,
 				7824F3FF16FB21D5007BC8B7 /* Bomb.mm */,
@@ -1678,8 +1680,6 @@
 				78DC79EC16F987D3004D4E0B /* AppDelegate.mm */,
 				78F9222F17311FD100FAC158 /* MyAudio.h */,
 				78F9223017311FD100FAC158 /* MyAudio.m */,
-				78F922341731E9F600FAC158 /* MyAudioUnit.h */,
-				78F922351731E9F700FAC158 /* MyAudioUnit.m */,
 				78F9223D17324DAF00FAC158 /* TestOpenAL.h */,
 				78F9223E17324DB000FAC158 /* TestOpenAL.m */,
 				78F9252217326D5100FAC158 /* RecordSystem.h */,
@@ -1958,11 +1958,11 @@
 				7824F40416FB21D6007BC8B7 /* Bomb.mm in Sources */,
 				7824F40516FB21D6007BC8B7 /* Cannon.mm in Sources */,
 				78F9223117311FD100FAC158 /* MyAudio.m in Sources */,
-				78F922361731E9F800FAC158 /* MyAudioUnit.m in Sources */,
 				78F9223F17324DB100FAC158 /* TestOpenAL.m in Sources */,
 				78F9252117325B4500FAC158 /* Util.m in Sources */,
 				78F9252417326D5300FAC158 /* RecordSystem.mm in Sources */,
 				78F9252A1732911A00FAC158 /* RemoveTempVideo.m in Sources */,
+				784AED4E173380C30083AF61 /* ShowScene.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

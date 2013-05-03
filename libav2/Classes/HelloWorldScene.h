@@ -9,6 +9,7 @@
 #include "Cannon.h"
 #include "MyAudio.h"
 #import "TestOpenAL.h"
+#include "ShowScene.h"
 
 using namespace std;
 
@@ -41,6 +42,7 @@ private:
     TestOpenAL *openAL;
     void onOpenAL();
     void stopOpenAL();
+    ShowScene *show;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

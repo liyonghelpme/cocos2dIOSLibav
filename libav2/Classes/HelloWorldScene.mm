@@ -2,6 +2,7 @@
 #include "SimpleAudioEngine.h"
 
 
+
 using namespace cocos2d;
 using namespace CocosDenshion;
 
@@ -62,6 +63,7 @@ bool HelloWorld::init()
     
     video = VideoController::create();
     addChild(video);
+    
     //video->setCamera(camera);
     
     item1->setScale(2);
@@ -117,6 +119,26 @@ void HelloWorld::onStart(CCObject *send){
     //const char *fileName = camera->getFileName();
     //CCLOG("fileName %s", fileName);
     //savedFile = string(fileName);
+    
+    
+    show = ShowScene::create();
+    CCLog("video is %x", video);
+    show->setRenderLayer(this);
+    show->setVideoController(video);
+    
+    //本场景只用于 update 和 draw 不用touch 处理
+    
+    CCDirector::sharedDirector()->setRenderLayer(this);
+    CCDirector::sharedDirector()->setShowLayer(show);
+    
+    CCScene *scene = CCScene::create();
+    removeFromParent();
+    scene->addChild(this);
+    scene->addChild(show);
+
+    CCDirector::sharedDirector()->replaceScene(scene);
+    
+    
     video->startWork(960, 640, 960, 640, "", 1./30);
     
 }

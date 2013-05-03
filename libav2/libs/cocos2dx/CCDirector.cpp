@@ -92,6 +92,14 @@ CCDirector* CCDirector::sharedDirector(void)
 CCSprite *CCDirector::getRecordSprite() {
     return recordSprite;
 }
+void CCDirector::setRenderLayer(cocos2d::CCNode * n){
+    renderLayer = n;
+    renderLayer->retain();
+}
+void CCDirector::setShowLayer(cocos2d::CCNode *s) {
+    showLayer = s;
+    showLayer->retain();
+}
 void CCDirector::startRecording() {
     if (!isRecording) {
         GLint oldFBO;
@@ -136,6 +144,10 @@ void CCDirector::stopRecording() {
         glDeleteTextures(1, &renderTarget);
         recordSprite->release();
         isRecording = false;
+        showLayer->release();
+        showLayer = NULL;
+        renderLayer->release();
+        renderLayer = NULL;
     }
 }
 
@@ -150,6 +162,8 @@ bool CCDirector::init(void)
 {
     CCLOG("cocos2d: %s", cocos2dVersion());
     
+    renderLayer = NULL;
+    showLayer = NULL;
     // scenes
     m_pRunningScene = NULL;
     m_pNextScene = NULL;
@@ -261,13 +275,17 @@ void CCDirector::drawScene(void)
     calculateDeltaTime();
 
     //tick before glClear: issue #533
+    //update RenderScene  ShowScene
     if (! m_bPaused)
     {
         m_pScheduler->update(m_fDeltaTime);
+        
     }
+    
     GLint oldFBO;
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
     
+    //渲染renderLayer 到 frameBuffer
     if (isRecording) {
         glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
     }
@@ -282,10 +300,16 @@ void CCDirector::drawScene(void)
 
     kmGLPushMatrix();
 
-    // draw the scene
-    if (m_pRunningScene)
-    {
-        m_pRunningScene->visit();
+    if(isRecording) {
+        if (renderLayer) {
+            renderLayer->visit();
+        }
+    } else {
+        // draw the scene
+        if (m_pRunningScene)
+        {
+            m_pRunningScene->visit();
+        }
     }
 
     // draw the notifications node
@@ -302,7 +326,10 @@ void CCDirector::drawScene(void)
     if (isRecording) {
         glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
         //将绘制的纹理绑定到sprite上 进行绘制 进行visit
-        recordSprite->visit();
+        //recordSprite->visit();
+        //显示showLayer
+        if(showLayer)
+            showLayer->visit();
     }
     kmGLPopMatrix();
 

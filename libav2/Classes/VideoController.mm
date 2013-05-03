@@ -28,14 +28,22 @@ bool VideoController::init()
     testTime = 10;
     camera = new CameraFile();
 
-    scheduleUpdate();
+    //scheduleUpdate();
     
     return true;
 }
-
+void VideoController::onEnter() {
+    CCNode::onEnter();
+    scheduleUpdate();
+}
+void VideoController::onExit() {
+    unscheduleUpdate();
+    CCNode::onExit();
+}
 void VideoController::startWork(int winW, int winH, int w, int h, const char *fn, float fr) {
     startYet = true;
     camera->startWork(winW, winH);
+    CCLog("VideoController startWork");
 }
 void VideoController::stopWork() {
     startYet = false;

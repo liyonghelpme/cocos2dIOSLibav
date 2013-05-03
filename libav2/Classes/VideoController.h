@@ -17,6 +17,8 @@ public:
     void compressCurrentFrame();
     bool getStart();
     void setCamera(CameraFile *);
+    virtual void onEnter();
+    virtual void onExit();
 private:
     string fileN;
     float MaxRecordTime; // 最大视频时间

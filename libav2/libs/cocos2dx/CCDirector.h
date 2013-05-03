@@ -103,7 +103,15 @@ private:
     GLuint renderTarget;
     CCSprite *recordSprite;
     CCTexture2D *recordTexture;
+    
+    //渲染到视频里的node
+    CCNode *renderLayer; // belong to CurScene render into Frame for record
+    
+    //显示到屏幕上的node
+    CCNode *showLayer;
 public:
+    void setRenderLayer(CCNode *);
+    void setShowLayer(CCNode *);
     void startRecording();
     void stopRecording();
     CCSprite *getRecordSprite();
